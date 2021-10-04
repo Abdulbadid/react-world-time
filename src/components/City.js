@@ -1,7 +1,9 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 
 export default function City() {
+
+    const [cities,setCities] = useState([]);
 
     useEffect(()=>{
         getCities()
@@ -17,11 +19,20 @@ export default function City() {
     const getCities=()=> {
         axios.get('http://worldtimeapi.org/api/timezones')
             .then(res => {
-                console.log(res.data)
+                setCities(res.data);
             })
     }
     return (
-        <div>
+        <div className="row">
+            {cities.map(city=>(
+                <div className="col l3 m4 s6" key={city}>
+                    <div className="card blue-grey darken-1">
+                        <div className="card-content white-text">
+                            <p>{city}</p>
+                        </div>
+                    </div>
+                </div>
+            ))}
             
         </div>
     )
